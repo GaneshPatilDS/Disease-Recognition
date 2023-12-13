@@ -42,9 +42,10 @@ class PrepareBaseModel:
             outputs=prediction
         )
 
+        
         full_model.compile(
             optimizer=tf.keras.optimizers.SGD(learning_rate=learning_rate),
-            loss=tf.keras.losses.CategoricalCrossentropy(),
+            loss=tf.keras.losses.CategoricalCrossentropy(),  # Change here
             metrics=["accuracy"]
         )
 
@@ -55,7 +56,7 @@ class PrepareBaseModel:
     def update_base_model(self):
         self.full_model = self._prepare_full_model(
             model=self.model,
-            classes=self.config.params_classes,
+            classes=self.config.params_classes ,        #self.config.params_classes
             freeze_all=True,
             freeze_till=None,
             learning_rate=self.config.params_learning_rate

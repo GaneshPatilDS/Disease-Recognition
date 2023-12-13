@@ -4,28 +4,31 @@ stages:
     cmd: python src/cnnClassifier/pipeline/stage_01_data_ingestion.py
     deps:
     - path: config/config.yaml
-      md5: 3f6dc733e0735665409e293214355568
-      size: 818
+      hash: md5
+      md5: f5856bb0690e06e96b6c9dcd08ff98f9
+      size: 831
     - path: src/cnnClassifier/pipeline/stage_01_data_ingestion.py
       md5: b0ff51aae578695575ba98f83c03d86e
       size: 914
     outs:
-    - path: artifacts/data_ingestion/Chicken-fecal-images
-      md5: 9e1f8dd2eae3c29e9d635df89d438ae4.dir
-      size: 12207807
-      nfiles: 390
+    - path: artifacts/data_ingestion/Data
+      hash: md5
+      md5: 40170c146b9660ad6ca868f823a1bf52.dir
+      size: 2300448032
+      nfiles: 6432
   prepare_base_model:
     cmd: python src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
     deps:
     - path: config/config.yaml
-      md5: 3f6dc733e0735665409e293214355568
-      size: 818
+      hash: md5
+      md5: f5856bb0690e06e96b6c9dcd08ff98f9
+      size: 831
     - path: src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
       md5: 5bbb3b3d7f36b28620ae359473f09153
       size: 1003
     params:
       params.yaml:
-        CLASSES: 2
+        CLASSES: 3
         IMAGE_SIZE:
         - 224
         - 224
@@ -35,29 +38,31 @@ stages:
         WEIGHTS: imagenet
     outs:
     - path: artifacts/prepare_base_model
-      md5: 0774dbc0f4a82fe0f16c2b4f8b2ad70c.dir
-      size: 118054560
+      hash: md5
+      md5: c0e939cfd1456298e20fd37dd94e7f3d.dir
+      size: 118159600
       nfiles: 2
   training:
     cmd: python src/cnnClassifier/pipeline/stage_03_training.py
     deps:
-    - path: artifacts/data_ingestion/Chicken-fecal-images
-      md5: 9e1f8dd2eae3c29e9d635df89d438ae4.dir
-      size: 12207807
-      nfiles: 390
+    - path: artifacts/data_ingestion/Data
+      hash: md5
+      md5: 40170c146b9660ad6ca868f823a1bf52.dir
+      size: 2300448032
+      nfiles: 6432
     - path: artifacts/prepare_base_model
-      md5: 0774dbc0f4a82fe0f16c2b4f8b2ad70c.dir
-      size: 118054560
+      hash: md5
+      md5: c0e939cfd1456298e20fd37dd94e7f3d.dir
+      size: 118159600
       nfiles: 2
     - path: config/config.yaml
-      md5: 3f6dc733e0735665409e293214355568
-      size: 818
-    - path: src/cnnClassifier/components/prepare_callbacks.py
-      md5: dfc1909f7e54d14bb10ff488888367f4
-      size: 1008
+      hash: md5
+      md5: f5856bb0690e06e96b6c9dcd08ff98f9
+      size: 831
     - path: src/cnnClassifier/pipeline/stage_03_training.py
-      md5: 040b50b39a7a78cd8f367c558ebf6dd1
-      size: 1268
+      hash: md5
+      md5: 1188de44e0e5cdadffb7fe4e3453b60e
+      size: 1245
     params:
       params.yaml:
         AUGMENTATION: true
@@ -69,24 +74,29 @@ stages:
         - 3
     outs:
     - path: artifacts/training/model.h5
-      md5: 36c31aaf79f22816bd5e8e5df9d87d03
-      size: 59337520
+      hash: md5
+      md5: c5835ca5deb703de905a2a148935fc86
+      size: 59541424
   evaluation:
     cmd: python src/cnnClassifier/pipeline/stage_04_evaluation.py
     deps:
-    - path: artifacts/data_ingestion/Chicken-fecal-images
-      md5: 9e1f8dd2eae3c29e9d635df89d438ae4.dir
-      size: 12207807
-      nfiles: 390
+    - path: artifacts/data_ingestion/Data
+      hash: md5
+      md5: 40170c146b9660ad6ca868f823a1bf52.dir
+      size: 2300448032
+      nfiles: 6432
     - path: artifacts/training/model.h5
-      md5: 36c31aaf79f22816bd5e8e5df9d87d03
-      size: 59337520
+      hash: md5
+      md5: c5835ca5deb703de905a2a148935fc86
+      size: 59541424
     - path: config/config.yaml
-      md5: 3f6dc733e0735665409e293214355568
-      size: 818
+      hash: md5
+      md5: f5856bb0690e06e96b6c9dcd08ff98f9
+      size: 831
     - path: src/cnnClassifier/pipeline/stage_04_evaluation.py
-      md5: f5c5da091d33ae0dc6b6c753ff6a6f82
-      size: 923
+      hash: md5
+      md5: 87a6660fafaf99b6c60cc702900b1071
+      size: 924
     params:
       params.yaml:
         BATCH_SIZE: 16
@@ -96,5 +106,6 @@ stages:
         - 3
     outs:
     - path: scores.json
-      md5: 85d9b2cdb3d44e4a7fbe93252e3f060a
-      size: 73
+      hash: md5
+      md5: 7efa2f206bf6c44aec7e2a0d1a5bb9b2
+      size: 72
